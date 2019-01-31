@@ -1,0 +1,195 @@
+/*	-WHAT IS THIS?-
+	The script featured here is an explanation of how to make your own custom addition to MPMB's D&D 5e Character Tools.
+	To add your own content to the Character Sheet, use the syntax below and save it in a file. You can then import this file directly to the sheet using the "Import" button and "Import/Export" bookmark.
+	There you can either import the file as a whole or just copy the text into a dialogue.
+	-KEEP IN MIND-
+	Note that you can add as many custom codes as you want, either by importing consecutive files or pasting the scripts into the dialogue.
+	It is recommended to enter the code in a freshly downloaded or reset sheet before adding any other information so that there won't be any conflicts.
+*/
+
+/*	-INFORMATION-
+	Subject:	Subclass (a.k.a. Archetype)
+	Effect:		This script adds the Accursed Archive subclass to the Warlock from the Compendium of Forgotten Secrets: Awakening
+	Sheet:		v12.999 (2017-11-29)
+*/
+var iFileName = "The Ashen Wolf - ClassSubList.js"; // Optional; This is how the file will be named in the sheet if you import it as a file and not copy-paste its content. Only the first occurrence of this variable will be used
+RequiredSheetVersion(12.999);
+
+/*SourceList["COFSA:TAW"] = {
+	name : "Compendium of Forgotten Secrets Awakening: The Ashen Wolf",
+	abbreviation : "COFSA:TAW",
+	group : "Compendium",
+	url : "https://www.genfantasypress.com/",
+	date : "2018/09/09"
+};*/
+AddSubClass("warlock","the ashen wolf", {
+	regexpSearch : /^(?=.*\bthe\b)(?=.*\bashen\b)(?=.*\bwolf\b).*$/i,
+	subname : "The Ashen Wolf",
+	source : ["COFSA:TAW",16],
+	spellcastingExtra : ["hunter's pace","inflict wounds","flame blade","pass without trace","funeral pyre","haste","ashen pack","wall of fire","cloudkill","hungering hate"],
+	/*features : {
+		"subclassfeature1" : {
+			name : "Breath of Smoke",
+			source : ["COFSA", 17],
+			minlevel : 1,
+			action : ["action",""],
+			addWeapons : ['Breath of Smoke'],
+			description : desc([
+				"I can exhale blistering embers in a 15-foot cone. Each creature in the area must make a Constitution saving throw against my warlock spell save DC.",
+				"Creatures that fail take fire damage equal to my warlock level + my Charisma modifier and are blinded until the end of their turn.",
+				"If this feature is activated again before finishing a short or long rest, I gain a level of exhaustion.",
+				"I can also breathe and see normally in smoke or ash-filled air."
+			])
+		},
+		"subclassfeature6" : {
+			name : "Feast for the Fire",
+			source : ["COFSA", 17],
+			minlevel : 6,
+			action : ["bonus action",""],
+			usages : 1,
+			recovery : "short rest",
+			description : desc([
+				"As a bonus action, I can choose one creature I can see within 60 feet.",
+				"For one minute, it is cursed by the Ashen Wolf. The curse ends early if the target dies.",
+				"Until the curse ends, the target loses any resistance to fire damage, and opportunity attacks against the target are made with advantage.",
+				"At 10th level, the target also loses any immunity to fire damage."
+			])
+		},
+		"subclassfeature10" : {
+			name : "Endless Pursuit",
+			source : ["COFSA", 17],
+			minlevel : 10,
+			dmgres: ["fire"],
+			recovery : "short rest",
+			description : desc([
+				"I gain resistance to fire damage.",
+				"When I finish a short rest, I can reduce my exhaustion by one level."
+			])
+		},
+		"subclassfeature14" : {
+			name : "Beast of the Burning End",
+			source : ["COFSA", 17],
+			minlevel : 14,
+			action : [["action", " (start)"], ["bonus action", " (end)"]],
+			usages : 1,
+			recovery : "long rest",
+			savetxt : { 
+				immune : ["fire"],
+				text : ["Immune to fire while transformed"]
+			},
+			description : desc([
+				"As an action, I can wrap myself in the guise of a massive flaming lupine creature.",
+				"For 1 minute, or until I end the effect early as a bonus action, I gain these benefits:",
+				"\u2022 My speed becomes Medium or Large (my choice).",
+				"\u2022 I ignore all levels of exhaustion.",
+				"\u2022 My speed increases by 20 feet.",
+				"\u2022 I have advantage on melee attack rolls against a creature while an ally is within 5 feet of said creature and not incapacitated.",
+				"\u2022 I am immune to fire damage.",
+				"I also summon 2 hell hounds to spaces within 5 feet of me. They obey verbal commands and will defend themselves if no commands are issued.",
+				"They have twice the hit points as normal hell hounds and count as elementals. They act on my initiative count.",
+				"Upon exiting this incarnation, the hell hounds turn to ash and must be reabsorbed into my body again from up to 300 feet away.",
+				"If a hell hound dies or is not reabsorbed, then I gain a point of exhaustion for each missing hound."
+			])
+		}
+	}*/
+});
+/*WeaponsList["breath of smoke"] = {
+	regExpSearch : /^(?=.*\bthe\b)(?=.*\bwild\b)(?=.*\bhuntsman\b).*$/i,
+	name : "Breath of Smoke",
+	source : ["COFSA", 16],
+	ability : 3,
+	type : "Natural",
+	damage : "C" + What("Cha"),
+	range : "15-ft cone",
+	description : "Enemies take fire damage and are blinded until the end of their next turn.",
+	abilitytodamage : false,
+	dc : true
+};
+ArmourList["hide of cinders"] = {
+	regExpSearch : /^(?=.*hide)(?=.*of)(?=.*cinders).*$/i,
+	name : "Hide of Cinders",
+	source : ["COFSA", 18],
+	type : "",
+	ac : 10 + What("Cha Mod"),
+	stealthdis : false,
+	strReq : 0,
+	addMod : false
+};
+AddWarlockInvocation("Chronicle of the Flame (prereq: Ashen Wolf patron, Pact of the Tome)", {
+	name : "Chronicle of the Flame",
+	source : ["COFSA", 17],
+	recovery : "short rest",
+	action : ["reaction",""],
+	prereqeval : "(/the accursed archive/).test(classes.known.warlock.subclass) && What('Class Features Remember').indexOf('warlock,pact boon,pact of the tome') !== -1",
+	description : desc([
+		"I can perform a ritual during a short or long rest. I must choose either Strength or Dexterity saving throws.",
+		"When I make a saving throw of this type, I can use my reaction to gain advantage on this saving throw and cast a cantrip with a casting time of one action."
+	])
+});
+AddWarlockInvocation("Essence of Ash (prereq: Ashen Wolf patron, Pact of the Chain)", {
+	name : "Essence of Ash",
+	source : ["COFSA", 17],
+	prereqeval : "(/the accursed archive/).test(classes.known.warlock.subclass) && What('Class Features Remember').indexOf('warlock,pact boon,pact of the chain') !== -1",
+	description : desc([
+		"If I have an emberborn as a familiar, it gains additional hit points equal to my warlock level + twice my Charisma modifier.",
+		"\u2022 At 11th level: the emberborn can become a Medium size creature, its bite deals 2d6 piercing damage and 2d6 fire damage, and its speed increases to 50 feet.",
+		"Creatures hit by the bite attack must make a DC 13 Strength saving throw or be knocked prone.",
+		"\u2022 At 16th level: the Medium emberborn's bite attack deals 3d6 piercing and 3d6 fire damage, and the Strength saving throw DC equals my warlock spell save DC."
+	])
+});
+AddWarlockInvocation("Hellfire Infusion (prereq: Ashen Wolf patron)", {
+	name : "Hellfire Infusion",
+	source : ["COFSA", 17],
+	action : ["bonus action",""],
+	prereqeval : "(/the accursed archive/).test(classes.known.warlock.subclass)",
+	description : desc([
+		"If I cast a cantrip or make a weapon attack, I can use my bonus action to empower it with elemental fire.",
+		"The attack deals fire damage instead of its regular type. When I do so, enemies within 5 feet of me take necrotic damage equal to my Charisma modifier as black ash bursts from my body."
+	])
+});
+AddWarlockInvocation("Hide of Cinders (prereq: Ashen Wolf patron, Pact of the Blade)", {
+	name : "Hide of Cinders",
+	source : ["COFSA", 18],
+	addArmor : "Hide of Cinders",
+	action : ["reaction",""],
+	prereqeval : "(/the accursed archive/).test(classes.known.warlock.subclass) && What('Class Features Remember').indexOf('warlock,pact boon,pact of the blade') !== -1",
+	description : desc([
+		"I can have my AC equal 10 + my Dexterity modifier + my Charisma modifier.",
+		"If a creature hits me while this armor is active, I can use my reaction to deal damage to the creature equal to my Charisma modifier."
+	])
+});
+AddWarlockInvocation("Hunger of the Wolf (prereq: Ashen Wolf patron)", {
+	name : "Hunger of the Wolf",
+	source : ["COFSA", 18],
+	recovery : "short rest",
+	prereqeval : "(/the accursed archive/).test(classes.known.warlock.subclass)",
+	description : desc([
+		"On my turn, when I deal a critical hit on an attack roll or reduce a creature to 0 hit points, I can cast a cantrip that targets an enemy as a bonus action."
+	])
+});
+AddWarlockInvocation("Scorched Blade (prereq: Ashen Wolf patron, Pact of the Blade)", {
+	name : "Scorched Blade",
+	source : ["COFSA", 18],
+	recovery : "short rest",
+	prereqeval : "(/the accursed archive/).test(classes.known.warlock.subclass && What('Class Features Remember').indexOf('warlock,pact boon,pact of the blade') !== -1)",
+	description : desc([
+		"I can create a wickedly barbed one-handed or versatile melee weapon made from embers and molten steel using your Pact of the Blade feature.",
+		"I can have this weapon deal fire damage. I can use my Charisma modifier for attack and damage rolls made with this weapon.",
+		"If a creature within my reach takes damage directly due to hitting me with an attack, I can use my reaction to immediately make an opportunity attack against this creature using this weapon.",
+		"If the spell or feature that would deal damage to the attacker requires a reaction, then the opportunity attack can be made using the same reaction."
+	])
+});
+AddWarlockInvocation("Through Fire and Flame (prereq: Ashen Wolf patron, level 13 warlock)", {
+	name : "Through Fire and Flame",
+	source : ["COFSA", 18],
+	action : ["reaction","(when taking fire damage)"],
+	usages : 2,
+	recovery : "short rest",
+	prereqeval : "(/the accursed archive/).test(classes.known.warlock.subclass) && classes.known.warlock.level >=13",
+	description : desc([
+		"If I would take fire damage, I can use my reaction to absorb the fire as an offering to the Wolf.",
+		"The damage is negated and I gain temporary hit points equal to the damage I would have taken before resistance or immunity.",
+		"The amount of temporary hit points recieved at one time cannot exceed three times my Charisma modifier."
+	])
+});
+*/

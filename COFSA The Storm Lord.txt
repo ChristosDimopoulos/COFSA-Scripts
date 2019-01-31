@@ -1,0 +1,64 @@
+var iFileName = "The Storm Lord - ClassSubList.js";
+RequiredSheetVersion(12.999);
+
+SourceList["COFSA"] = {
+	name : "Compendium of Forgotten Secrets: Awakening",
+	abbreviation : "COFSA",
+	group : "Compendium",
+	url : "https://www.genfantasypress.com/",
+	date : "2018/09/09"
+};
+
+AddSubClass("warlock","the storm lord", {
+	"subname" : "The Storm Lord",
+	"source" : ["COFSA",86],
+	"spellcastingExtra" : ["fog cloud","thunderwave","gust of wind","skystrike","call lightning","wind wall","ice storm","windblade","storm's eye","unstoppable ascent"],
+	"features" : {
+		"subclassfeature1" : {
+			name : "Majesty of the Cloud Ruler",
+			source : ["COFSA", 87],
+			minlevel : 1,
+			description : desc([
+
+			]),
+			recovery : "short rest",
+			action : ["action",""],
+			usages : 1
+		},
+		"subclassfeature6" : {
+			name : "Breath of the Gale",
+			source : ["COFSA", 87],
+			minlevel : 6,
+			description : desc([
+
+			]),
+		},
+		"subclassfeature10" : {
+			name : "Rider of Lightning",
+			source : ["COFSA", 87],
+			minlevel : 10,
+			description : desc([
+
+			]),
+			action : ["bonus action", ""]
+		},
+		"subclassfeature14" : {
+			name : "Slayer of the King",
+			source : ["COFSA", 87],
+			minlevel : 14,
+			description : desc([
+
+			]),
+			recovery : "long rest",
+			action : ["action",""],
+			usages : 1
+		}
+	}
+});
+
+/*AddWarlockInvocation("Arc Lightning (prereq: level 11 warlock)", {
+	name : "Arc Lightning",
+	source : ["COFSA", 87],
+	minlevel : 11,
+	
+});*/
